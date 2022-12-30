@@ -1,15 +1,15 @@
 pipeline {
   environment {
-    dockerimagename = "vijaylokesh/my-tomcat"
-    registry_url = "https://registry.hub.docker.com"
-    registryCredential = 'my-docker-private-id'
+    dockerimagename = "junjesh/my_repo1:tome_web"
+    registry_url = "https://hub.docker.com/repository/docker/junjesh/my_repo1"
+    registryCredential = 'junju1'
     }
     tools {
-        maven 'maven3.8.6'
+        maven 'mvn'
     }
     
 	agent {
-     label 'CI-Jenkins-Slave'
+     label 'Jenkins_build_label'
   }
   
   stages {
@@ -28,14 +28,14 @@ pipeline {
       steps{
         script {
          
-         dockerImage = docker.build dockerimagename
+         dockerImage = docker.build junjesh/image1
         }
       }
     }
     stage('Pushing Image') {
       steps{
         script {
-          docker.withRegistry( registry_url, registryCredential ) {
+          docker.withRegistry( https://hub.docker.com/repository/docker/junjesh/my_repo1, junju1 ) {
             dockerImage.push("${env.BUILD_NUMBER}")
             dockerImage.push("latest")
           }

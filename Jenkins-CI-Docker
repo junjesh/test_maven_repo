@@ -1,7 +1,7 @@
 pipeline {
   environment {
-    dockerimagename = "junjesh/my_repo1:tome_web"
-    registry_url = "https://hub.docker.com/repository/docker/junjesh/my_repo1"
+    dockerimagename = "junjesh/my_repo1"
+    registry_url = "https://registry.hub.docker.com"
     registryCredential = 'junju1'
     }
     tools {
@@ -28,16 +28,16 @@ pipeline {
       steps{
         script {
          
-         dockerImage = docker.build junjesh/image1
+         dockerImage = docker.build dockerimagename
         }
       }
     }
     stage('Pushing Image') {
       steps{
         script {
-          docker.withRegistry( https://hub.docker.com/repository/docker/junjesh/my_repo1, junju1 ) {
+          docker.withRegistry(https://registry.hub.docker.com ,registryCredential ) {
             dockerImage.push("${env.BUILD_NUMBER}")
-            dockerImage.push("image1")
+            dockerImage.push("latest")
           }
         }
       }
